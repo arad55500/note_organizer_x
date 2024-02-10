@@ -5,7 +5,7 @@ import RectangleNote from './components/Notes/RectangleNote';
 import NoteContainer from './components/Notes/NoteContainer';
 import NoteSelectorTab from './components/Tabs/NoteSelectorTab';
 import './App.css';
-import './index.css';
+import './index.css'; //important just in case
 
 const App = () => {
   const [notes, setNotes] = useState([]); // Holds the list of square and circle notes
