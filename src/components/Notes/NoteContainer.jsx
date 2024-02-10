@@ -84,7 +84,7 @@ const NoteContainer = () => {
         fontSize: '12px',
         textAlign: 'center',
       }}>
-        Note Organizer X Version 1.1 by Arad Okanin | aradokanin.com
+        Note Organizer X Version 1.2 by Arad Okanin | aradokanin.com
       </div>
     </div>
   );
