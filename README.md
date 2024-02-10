@@ -21,13 +21,15 @@ Note_Organizer_X is a modern web application designed to streamline the process 
 2. Navigate to the project directory.
 3. Install dependencies:
 
-```npm install
+```
+npm install
 ```
 
 ### Running the Application
 1. To start the application, run:
 
-```npm run dev
+```
+npm run dev
 ```
 
 2. Open your web browser and go to http://localhost:3006 (or the specified port).
