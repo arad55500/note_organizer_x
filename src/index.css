@@ -1,0 +1,38 @@
+/* Global styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #171717; /* Dark background for the whole page */
+    color: #ffffff; /* Light text color for readability */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Style adjustments for input fields for better visibility */
+  input, textarea {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 0.5em;
+  }
+  
+  /* Ensure anchors (links) are visible */
+  a {
+    color: #61dafb;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Remove default styles for non-used elements */
+  .logo, .card, .read-the-docs {
+    display: none;
+  }
+  
+  /* You might want to add other global styles as needed */
+  

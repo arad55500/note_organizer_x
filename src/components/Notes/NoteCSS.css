@@ -1,0 +1,29 @@
+.note-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #111111;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: top 0.5s ease;
+  }
+  
+  .note-menu.hidden {
+    top: -100%; /* Hide the menu */
+  }
+  
+  .note-button {
+    margin: 0 10px;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+  
+  .notes-container {
+    padding-top: 60px; /* Make space for the menu */
+  }
+  
