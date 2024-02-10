@@ -8,23 +8,14 @@ const NoteContainer = () => {
   const [showMenu, setShowMenu] = useState(true);
 
   useEffect(() => {
-    // Safely load notes from localStorage
-    try {
-      const savedNotes = JSON.parse(localStorage.getItem('notes') || '[]');
-      setNotes(savedNotes);
-    } catch (error) {
-      console.error("Failed to load notes from localStorage:", error);
-      setNotes([]);
-    }
+    // Load notes from local storage when component mounts
+    const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
+    setNotes(savedNotes);
   }, []);
 
   useEffect(() => {
-    // Attempt to save notes to localStorage safely
-    try {
-      localStorage.setItem('notes', JSON.stringify(notes));
-    } catch (error) {
-      console.error("Failed to save notes to localStorage:", error);
-    }
+    // Save notes to local storage whenever notes state changes
+    localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
   const addNote = (type) => {
@@ -41,7 +32,6 @@ const NoteContainer = () => {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
   };
 
-  // Ensuring the rendering logic is crash-proof
   const renderNote = (note) => {
     const commonProps = {
       key: note.id,
@@ -52,10 +42,14 @@ const NoteContainer = () => {
     };
 
     switch (note.type) {
-      case 'rectangle': return <RectangleNote {...commonProps} />;
-      case 'square': return <SquareNote {...commonProps} />;
-      case 'circle': return <CircleNote {...commonProps} />;
-      default: return null; // This handles undefined or unexpected note types safely
+      case 'rectangle':
+        return <RectangleNote {...commonProps} />;
+      case 'square':
+        return <SquareNote {...commonProps} />;
+      case 'circle':
+        return <CircleNote {...commonProps} />;
+      default:
+        return null;
     }
   };
 
@@ -75,8 +69,7 @@ const NoteContainer = () => {
       <div className="notes-container" style={{ marginTop: '60px' }}>
         {notes.map(renderNote)}
       </div>
-
-             {/* Footer */}
+      {/* Footer */}
       <div style={{
         position: 'fixed',
         bottom: '10px',
@@ -91,8 +84,6 @@ const NoteContainer = () => {
       }}>
         Note Organizer X Version 1.1 by Arad Okanin
       </div>
-
-
     </div>
   );
 };

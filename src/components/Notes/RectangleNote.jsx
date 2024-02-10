@@ -3,16 +3,17 @@ import React, { useState } from 'react';
 const RectangleNote = ({ id, initialText, initialPosition, onRemove }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(initialText);
-  const [position, setPosition] = useState(initialPosition || { x: 0, y: 0 });
+  const [position, setPosition] = useState(initialPosition || { x: 100, y: 100 });
+  const [size, setSize] = useState({ width: 150, height: 100 }); // Default size
+  const [isResizing, setIsResizing] = useState(false); // Resizing state
 
+  // Prevents the note from being dragged while resizing
   const handleMouseDown = (e) => {
-    if (e.button !== 0) return; // Only respond to left-clicks
+    if (e.button !== 0 || isResizing) return; // Only respond to left-clicks and ignore if resizing
 
-    // Calculate the initial offset from the mouse position to the note's position
     const offsetX = e.clientX - position.x;
     const offsetY = e.clientY - position.y;
 
-    // Function to update the note's position
     const handleMouseMove = (moveEvent) => {
       setPosition({
         x: moveEvent.clientX - offsetX,
@@ -20,43 +21,52 @@ const RectangleNote = ({ id, initialText, initialPosition, onRemove }) => {
       });
     };
 
-    // Function to clean up event listeners after dragging
     const handleMouseUp = () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
 
-    // Attach event listeners to the document
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
 
     e.preventDefault();
   };
 
-  const handleDoubleClick = () => {
-    setIsEditing(true);
-  };
+  // Handles resizing
+  const handleResizeMouseDown = (e) => {
+    // Prevent dragging event from firing
+    e.stopPropagation(); 
+    setIsResizing(true);
 
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startWidth = size.width;
+    const startHeight = size.height;
 
-  const handleBlur = () => {
-    setIsEditing(false);
-  };
+    const handleMouseMove = (moveEvent) => {
+      const newWidth = Math.max(50, startWidth + moveEvent.clientX - startX);
+      const newHeight = Math.max(50, startHeight + moveEvent.clientY - startY);
+      setSize({ width: newWidth, height: newHeight });
+    };
 
-  const handleDelete = () => {
-    if (window.confirm('Are you sure you want to remove this note?')) {
-      onRemove(id);
-    }
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    e.preventDefault();
   };
 
   const noteStyle = {
-    width: '150px',
-    height: '100px',
+    width: `${size.width}px`,
+    height: `${size.height}px`,
     backgroundColor: 'yellow',
-    color: 'black',
     display: 'flex',
+    color: 'black',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -67,24 +77,35 @@ const RectangleNote = ({ id, initialText, initialPosition, onRemove }) => {
     zIndex: 1000,
   };
 
+  const resizeHandleStyle = {
+    position: 'absolute',
+    bottom: '0',
+    right: '0',
+    width: '10px',
+    height: '10px',
+    backgroundColor: 'red',
+    cursor: 'nwse-resize',
+  };
+
   return (
     <div style={noteStyle} onMouseDown={handleMouseDown}>
-      <div style={{ position: 'absolute', top: 0, right: 0 }}>
-        <button onClick={handleDelete}>X</button>
+      <div style={{ position: 'absolute', top: 0, right: 0, cursor: 'pointer' }}>
+        <button onClick={() => onRemove(id)}>X</button>
       </div>
       {isEditing ? (
         <textarea
           autoFocus
           value={text}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          style={{ textAlign: 'center', fontSize: '1rem', border: 'none', outline: 'none' }}
+          onChange={(e) => setText(e.target.value)}
+          onBlur={() => setIsEditing(false)}
+          style={{ textAlign: 'center', fontSize: '1rem', border: 'none', outline: 'none', resize: 'none', width: '100%', height: '100%' }}
         />
       ) : (
-        <p onDoubleClick={handleDoubleClick} style={{ textAlign: 'center', fontSize: '1rem' }}>
+        <p onDoubleClick={() => setIsEditing(true)} style={{ textAlign: 'center', fontSize: '1rem' }}>
           {text}
         </p>
       )}
+      <div style={resizeHandleStyle} onMouseDown={handleResizeMouseDown}></div>
     </div>
   );
 };
