@@ -1,3 +1,5 @@
+![Screenshot1](src/Screenshots/Screenshot1.png "screenshot1")
+
 # Note_Organizer_X Version 1.2 by Arad Okanin
 
 Note_Organizer_X is a modern web application designed to streamline the process of note-taking and organization. Built with efficiency and user experience in mind, this app offers a sleek interface and intuitive features to enhance your productivity.
@@ -41,4 +43,8 @@ Contributions to Note_Organizer_X are welcome! Please read our contributing guid
 ## Acknowledgments
 
 Created by Arad Okanin | aradokanin.com
+
+## Screenshot
+
+![Screenshot2](src/Screenshots/Screenshot2.png "screenshot2")
 
