@@ -41,7 +41,7 @@ const App = () => {
   return (
     <div className="app">
       <div className="notes-container">
-        {notes.map(note => renderNote(note))}
+        {/* {notes.map(note => renderNote(note))} */}
       </div>
       <NoteContainer /> {/* This component now solely manages rectangle notes */}
     </div>

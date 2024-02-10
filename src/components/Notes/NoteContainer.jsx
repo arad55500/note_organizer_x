@@ -4,14 +4,12 @@ import SquareNote from './SquareNote';
 import CircleNote from './CircleNote';
 
 const NoteContainer = () => {
-  const [notes, setNotes] = useState([]);
-  const [showMenu, setShowMenu] = useState(true);
-
-  useEffect(() => {
+  const [notes, setNotes] = useState(() => {
     // Load notes from local storage when component mounts
     const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
-    setNotes(savedNotes);
-  }, []);
+    return savedNotes;
+  });
+  const [showMenu, setShowMenu] = useState(true);
 
   useEffect(() => {
     // Save notes to local storage whenever notes state changes
@@ -24,12 +22,13 @@ const NoteContainer = () => {
       type,
       text: `New ${type.charAt(0).toUpperCase() + type.slice(1)} Note`,
       position: { x: 100, y: 100 },
+      size: { width: 150, height: 100 } // Default size
     };
-    setNotes((prevNotes) => [...prevNotes, newNote]);
+    setNotes(prevNotes => [...prevNotes, newNote]);
   };
 
   const removeNote = (id) => {
-    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+    setNotes(prevNotes => prevNotes.filter(note => note.id !== id));
   };
 
   const renderNote = (note) => {
@@ -38,6 +37,7 @@ const NoteContainer = () => {
       id: note.id,
       initialText: note.text,
       initialPosition: note.position,
+      initialSize: note.size,
       onRemove: removeNote,
     };
 
@@ -57,9 +57,11 @@ const NoteContainer = () => {
     <div>
       {showMenu && (
         <div style={{ display: 'flex', justifyContent: 'center', position: 'fixed', top: 0, width: '100%', backgroundColor: '#333', padding: '10px 0' }}>
-          <button onClick={() => addNote('rectangle')} style={{ backgroundColor: '#333', color: 'white', margin: '0 5px' }}>▭ Rectangle</button>
-          <button onClick={() => addNote('square')} style={{ backgroundColor: '#333', color: 'white', margin: '0 5px' }}>■ Square</button>
-          <button onClick={() => addNote('circle')} style={{ backgroundColor: '#333', color: 'white', margin: '0 5px' }}>⬤ Circle</button>
+          {['rectangle', 'square', 'circle'].map(type => (
+            <button key={type} onClick={() => addNote(type)} style={{ backgroundColor: '#333', color: 'white', margin: '0 5px' }}>
+              {type === 'rectangle' ? '▭ Rectangle' : type === 'square' ? '■ Square' : '⬤ Circle'}
+            </button>
+          ))}
           <button onClick={() => setShowMenu(false)} style={{ backgroundColor: '#333', color: 'white', margin: '0 5px' }}>Hide</button>
         </div>
       )}

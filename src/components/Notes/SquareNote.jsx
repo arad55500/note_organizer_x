@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SquareNote = ({ id, initialText, initialPosition, onRemove }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -6,6 +6,18 @@ const SquareNote = ({ id, initialText, initialPosition, onRemove }) => {
   const [position, setPosition] = useState(initialPosition || { x: 0, y: 0 });
   const [size, setSize] = useState({ width: 100, height: 100 }); // Default size
   const [isResizing, setIsResizing] = useState(false); // Resizing state
+
+  useEffect(() => {
+    // Save changes to local storage whenever text or position state changes
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const updatedNotes = notes.map(note => {
+      if (note.id === id) {
+        return { ...note, text, position, size };
+      }
+      return note;
+    });
+    localStorage.setItem('notes', JSON.stringify(updatedNotes));
+  }, [id, text, position, size]);
 
   // Prevents the note from being dragged while resizing
   const handleMouseDown = (e) => {
