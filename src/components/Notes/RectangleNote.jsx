@@ -8,6 +8,17 @@ const RectangleNote = ({ id, initialText, initialPosition, onRemove }) => {
   const [isResizing, setIsResizing] = useState(false); // Resizing state
 
   useEffect(() => {
+    // Load saved note data from local storage
+    const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
+    const savedNote = savedNotes.find(note => note.id === id);
+    if (savedNote) {
+      setText(savedNote.text);
+      setPosition(savedNote.position);
+      setSize(savedNote.size);
+    }
+  }, [id]); // Load saved data when the component is mounted or id changes
+
+  useEffect(() => {
     // Save changes to local storage whenever text, position, or size state changes
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const updatedNotes = notes.map(note => {
