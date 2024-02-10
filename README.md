@@ -4,6 +4,8 @@
 
 Note_Organizer_X is a modern web application designed to streamline the process of note-taking and organization. Built with efficiency and user experience in mind, this app offers a sleek interface and intuitive features to enhance your productivity.
 
+You can access a live version of this application here: https://note-organizer-x.vercel.app/
+
 ## Features
 
 - Efficient Note Management: Organize and access your notes quickly through our simple user interface.
