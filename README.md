@@ -1,4 +1,4 @@
-![Screenshot1](src/Screenshots/Screenshot1.png "screenshot1")
+![Screenshot1](src/Screenshots/Screenshot2.png "screenshot1")
 
 # Note_Organizer_X Version 1.2 by Arad Okanin
 
@@ -46,5 +46,5 @@ Created by Arad Okanin | aradokanin.com
 
 ## Screenshot
 
-![Screenshot2](src/Screenshots/Screenshot2.png "screenshot2")
+![Screenshot2](src/Screenshots/Screenshot1.png "screenshot2")
 
