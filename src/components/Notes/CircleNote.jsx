@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
 const CircleNote = ({ id, initialText, initialPosition, onRemove }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [text, setText] = useState(initialText);
+  const [isEditing, setIsEditing] = useState(false); // State to track if the note is being edited
+  const [text, setText] = useState(initialText); // State to hold the note text
   const [position, setPosition] = useState(initialPosition || { x: 100, y: 100 });
   const [size, setSize] = useState({ width: 100, height: 100 }); // Default size
   const [isResizing, setIsResizing] = useState(false); // Resizing state
 
   useEffect(() => {
     // Load saved note data from local storage
-    const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
-    const savedNote = savedNotes.find(note => note.id === id);
-    if (savedNote) {
-      setText(savedNote.text);
-      setPosition(savedNote.position);
-      setSize(savedNote.size);
+    const savedNotes = JSON.parse(localStorage.getItem('notes')) || []; // Load saved notes from local storage
+    const savedNote = savedNotes.find(note => note.id === id); // Find the saved note with the matching ID
+    if (savedNote) { // If the saved note exists
+      setText(savedNote.text); // Set the note text
+      setPosition(savedNote.position); // Set the note position
+      setSize(savedNote.size); // Set the note size
     }
   }, [id]); // Load saved data when the component is mounted or id changes
 
@@ -34,8 +34,8 @@ const CircleNote = ({ id, initialText, initialPosition, onRemove }) => {
   const handleMouseDown = (e) => {
     if (e.button !== 0 || isResizing) return; // Only respond to left-clicks and ignore if resizing
 
-    const offsetX = e.clientX - position.x;
-    const offsetY = e.clientY - position.y;
+    const offsetX = e.clientX - position.x; // Calculate the difference between the mouse position and the note position
+    const offsetY = e.clientY - position.y; // Calculate the difference between the mouse position and the note position
 
     const handleMouseMove = (moveEvent) => {
       setPosition({
