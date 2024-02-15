@@ -45,14 +45,14 @@ const CircleNote = ({ id, initialText, initialPosition, onRemove }) => {
     };
 
     const handleMouseUp = () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mousemove', handleMouseMove); // Remove event listeners
+      document.removeEventListener('mouseup', handleMouseUp); // Remove event listeners
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mousemove', handleMouseMove); // Add event listeners
+    document.addEventListener('mouseup', handleMouseUp); // Add event listeners
 
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default behavior of the mouse click
   };
 
   // Handles resizing
@@ -61,10 +61,10 @@ const CircleNote = ({ id, initialText, initialPosition, onRemove }) => {
     e.stopPropagation(); 
     setIsResizing(true);
 
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const startWidth = size.width;
-    const startHeight = size.height;
+    const startX = e.clientX; // Calculate the difference between the mouse position and the note position
+    const startY = e.clientY; // Calculate the difference between the mouse position and the note position
+    const startWidth = size.width; // Calculate the difference between the mouse position and the note position
+    const startHeight = size.height; // Calculate the difference between the mouse position and the note position
 
     const handleMouseMove = (moveEvent) => {
       const newWidth = Math.max(50, startWidth + moveEvent.clientX - startX);
