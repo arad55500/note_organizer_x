@@ -39,8 +39,8 @@ const CircleNote = ({ id, initialText, initialPosition, onRemove }) => {
 
     const handleMouseMove = (moveEvent) => {
       setPosition({
-        x: moveEvent.clientX - offsetX,
-        y: moveEvent.clientY - offsetY,
+        x: moveEvent.clientX - offsetX, // Update the note position
+        y: moveEvent.clientY - offsetY, // Update the note position
       });
     };
 
